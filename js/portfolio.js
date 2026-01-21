@@ -363,6 +363,238 @@ const Portfolio = {
         return { totalActivities, totalHours, types };
     },
 
+    // Category colors for charts
+    categoryColors: {
+        club: '#3b82f6',
+        sport: '#10b981',
+        volunteer: '#f472b6',
+        work: '#f59e0b',
+        award: '#8b5cf6',
+        project: '#06b6d4',
+        other: '#94a3b8'
+    },
+
+    // Calculate hours by category
+    getHoursByCategory() {
+        const hoursByCategory = {};
+        this.activities.forEach(activity => {
+            const type = activity.type || 'other';
+            hoursByCategory[type] = (hoursByCategory[type] || 0) + (activity.totalHours || 0);
+        });
+        return hoursByCategory;
+    },
+
+    // Get all skills across activities
+    getAllSkills() {
+        const skillCount = {};
+        this.activities.forEach(activity => {
+            (activity.skills || []).forEach(skill => {
+                skillCount[skill] = (skillCount[skill] || 0) + 1;
+            });
+        });
+        // Sort by frequency and return top skills
+        return Object.entries(skillCount)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 8)
+            .map(([skill, count]) => ({ skill, count }));
+    },
+
+    // Calculate progress percentage
+    calculateProgress() {
+        const profile = Storage.getUserProfile() || {};
+        const checks = {
+            profile: !!(profile.displayName || Auth.getDisplayName()),
+            'first-activity': this.activities.length >= 1,
+            'three-activities': this.activities.length >= 3,
+            skills: this.activities.some(a => a.skills && a.skills.length > 0),
+            hours: this.activities.reduce((sum, a) => sum + (a.totalHours || 0), 0) >= 50
+        };
+
+        const completed = Object.values(checks).filter(Boolean).length;
+        const total = Object.keys(checks).length;
+        const percentage = Math.round((completed / total) * 100);
+
+        return { checks, percentage };
+    },
+
+    // Calculate earned badges
+    getEarnedBadges() {
+        const totalActivities = this.activities.length;
+        const totalHours = this.activities.reduce((sum, a) => sum + (a.totalHours || 0), 0);
+
+        return {
+            first: totalActivities >= 1,
+            dedicated: totalActivities >= 10,
+            century: totalHours >= 100
+        };
+    },
+
+    // Animate counter
+    animateCounter(element, target, duration = 1000) {
+        const start = parseInt(element.textContent) || 0;
+        const startTime = performance.now();
+
+        const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+
+            // Ease out cubic
+            const easeOut = 1 - Math.pow(1 - progress, 3);
+            const current = Math.round(start + (target - start) * easeOut);
+
+            element.textContent = current.toLocaleString();
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            }
+        };
+
+        requestAnimationFrame(animate);
+    },
+
+    // Update progress ring
+    updateProgressRing(percentage) {
+        const ring = document.getElementById('progress-ring-fill');
+        const valueEl = document.getElementById('progress-value');
+        const percentageEl = document.getElementById('progress-percentage');
+
+        if (!ring) return;
+
+        // Circle circumference = 2 * PI * r = 2 * 3.14159 * 52 ≈ 326.73
+        const circumference = 326.73;
+        const offset = circumference - (percentage / 100) * circumference;
+
+        // Animate the ring
+        setTimeout(() => {
+            ring.style.strokeDashoffset = offset;
+        }, 100);
+
+        // Animate the percentage
+        if (valueEl) this.animateCounter(valueEl, percentage, 1200);
+        if (percentageEl) percentageEl.textContent = `${percentage}%`;
+    },
+
+    // Update progress checklist
+    updateProgressChecklist(checks) {
+        Object.entries(checks).forEach(([key, completed]) => {
+            const item = document.querySelector(`.checklist-item[data-check="${key}"]`);
+            if (item) {
+                item.classList.toggle('completed', completed);
+            }
+        });
+    },
+
+    // Update milestone badges
+    updateMilestoneBadges(badges) {
+        Object.entries(badges).forEach(([key, earned]) => {
+            const badge = document.querySelector(`.badge-item[data-badge="${key}"]`);
+            if (badge) {
+                badge.classList.toggle('earned', earned);
+            }
+        });
+    },
+
+    // Render donut chart
+    renderDonutChart() {
+        const segmentsGroup = document.getElementById('donut-segments');
+        const legendContainer = document.getElementById('chart-legend');
+        const totalHoursEl = document.getElementById('chart-total-hours');
+
+        if (!segmentsGroup || !legendContainer) return;
+
+        const hoursByCategory = this.getHoursByCategory();
+        const totalHours = Object.values(hoursByCategory).reduce((a, b) => a + b, 0);
+
+        // Update center text
+        if (totalHoursEl) {
+            this.animateCounter(totalHoursEl, totalHours, 1000);
+        }
+
+        segmentsGroup.innerHTML = '';
+        legendContainer.innerHTML = '';
+
+        if (totalHours === 0) {
+            legendContainer.innerHTML = '<div class="legend-item"><span class="legend-name">No hours logged yet</span></div>';
+            return;
+        }
+
+        const radius = 80;
+        const circumference = 2 * Math.PI * radius;
+        let cumulativeOffset = 0;
+
+        Object.entries(hoursByCategory)
+            .sort((a, b) => b[1] - a[1])
+            .forEach(([category, hours], index) => {
+                const percentage = hours / totalHours;
+                const dashLength = percentage * circumference;
+                const color = this.categoryColors[category] || this.categoryColors.other;
+                const typeName = this.types[category]?.label || 'Other';
+
+                // Create segment
+                const segment = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                segment.setAttribute('class', 'donut-segment');
+                segment.setAttribute('cx', '100');
+                segment.setAttribute('cy', '100');
+                segment.setAttribute('r', radius);
+                segment.setAttribute('stroke', color);
+                segment.setAttribute('stroke-dasharray', `${dashLength} ${circumference - dashLength}`);
+                segment.setAttribute('stroke-dashoffset', -cumulativeOffset);
+                segment.style.animationDelay = `${index * 0.1}s`;
+
+                segmentsGroup.appendChild(segment);
+
+                // Create legend item
+                const legendItem = document.createElement('div');
+                legendItem.className = 'legend-item';
+                legendItem.innerHTML = `
+                    <span class="legend-color" style="background: ${color}"></span>
+                    <span class="legend-name">${typeName}</span>
+                    <span class="legend-value">${hours}h</span>
+                `;
+                legendContainer.appendChild(legendItem);
+
+                cumulativeOffset += dashLength;
+            });
+    },
+
+    // Render skills cloud
+    renderSkillsCloud() {
+        const container = document.getElementById('skills-cloud');
+        if (!container) return;
+
+        const skills = this.getAllSkills();
+
+        if (skills.length === 0) {
+            container.innerHTML = '<span class="skill-cloud-item empty">Add skills to your activities</span>';
+            return;
+        }
+
+        const maxCount = Math.max(...skills.map(s => s.count));
+
+        container.innerHTML = skills.map((s, i) => {
+            const isLarge = s.count === maxCount && maxCount > 1;
+            return `<span class="skill-cloud-item${isLarge ? ' large' : ''}" style="animation-delay: ${0.4 + i * 0.05}s">${this.escapeHtml(s.skill)}</span>`;
+        }).join('');
+    },
+
+    // Update dashboard stats with animations
+    updateDashboard() {
+        // Update progress tracker
+        const progress = this.calculateProgress();
+        this.updateProgressRing(progress.percentage);
+        this.updateProgressChecklist(progress.checks);
+
+        // Update badges
+        const badges = this.getEarnedBadges();
+        this.updateMilestoneBadges(badges);
+
+        // Update donut chart
+        this.renderDonutChart();
+
+        // Update skills cloud
+        this.renderSkillsCloud();
+    },
+
     // Format date for display
     formatDateRange(startDate, endDate) {
         const formatMonth = (dateStr) => {
@@ -383,11 +615,18 @@ const Portfolio = {
         const emptyState = document.getElementById('empty-state');
         const filtered = this.getFilteredActivities();
 
-        // Update stats
+        // Update stats with animation
         const stats = this.getStats();
-        document.getElementById('total-activities').textContent = stats.totalActivities;
-        document.getElementById('total-hours').textContent = stats.totalHours.toLocaleString();
-        document.getElementById('activity-types').textContent = stats.types;
+        const activitiesEl = document.getElementById('total-activities');
+        const hoursEl = document.getElementById('total-hours');
+        const typesEl = document.getElementById('activity-types');
+
+        if (activitiesEl) this.animateCounter(activitiesEl, stats.totalActivities, 800);
+        if (hoursEl) this.animateCounter(hoursEl, stats.totalHours, 800);
+        if (typesEl) this.animateCounter(typesEl, stats.types, 800);
+
+        // Update dashboard panels
+        this.updateDashboard();
 
         // Show/hide empty state
         if (this.activities.length === 0) {
@@ -399,8 +638,8 @@ const Portfolio = {
         grid.style.display = 'grid';
         emptyState.style.display = 'none';
 
-        // Render activity cards
-        grid.innerHTML = filtered.map(activity => this.renderActivityCard(activity)).join('');
+        // Render activity cards with staggered animation
+        grid.innerHTML = filtered.map((activity, index) => this.renderActivityCard(activity, index)).join('');
 
         // Attach event listeners
         grid.querySelectorAll('[data-edit]').forEach(btn => {
@@ -413,13 +652,14 @@ const Portfolio = {
     },
 
     // Render single activity card
-    renderActivityCard(activity) {
+    renderActivityCard(activity, index = 0) {
         const type = this.types[activity.type] || this.types.other;
         const skills = (activity.skills || []).slice(0, 3);
         const hasMoreSkills = (activity.skills || []).length > 3;
+        const animationDelay = 0.1 + (index * 0.08);
 
         return `
-            <div class="activity-card">
+            <div class="activity-card" style="animation-delay: ${animationDelay}s">
                 <div class="activity-card-header">
                     <div class="activity-icon ${activity.type}">${type.icon}</div>
                     <div class="activity-header-content">

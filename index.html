@@ -26,17 +26,20 @@
                     <div class="logo-icon-wrapper">
                         <svg class="logo-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <defs>
-                                <linearGradient id="logoGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <linearGradient id="logoGrad1" x1="0%" y1="100%" x2="100%" y2="0%">
                                     <stop offset="0%" style="stop-color:#3b82f6"/>
-                                    <stop offset="50%" style="stop-color:#0ea5e9"/>
                                     <stop offset="100%" style="stop-color:#06b6d4"/>
                                 </linearGradient>
-                                <linearGradient id="logoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#14b8a6"/>
+                                <linearGradient id="logoGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#0ea5e9"/>
                                     <stop offset="100%" style="stop-color:#22d3ee"/>
                                 </linearGradient>
+                                <linearGradient id="logoGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#06b6d4"/>
+                                    <stop offset="100%" style="stop-color:#67e8f9"/>
+                                </linearGradient>
                                 <filter id="glow">
-                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
                                     <feMerge>
                                         <feMergeNode in="coloredBlur"/>
                                         <feMergeNode in="SourceGraphic"/>
@@ -44,14 +47,14 @@
                                 </filter>
                             </defs>
                             <!-- Background circle -->
-                            <circle cx="30" cy="30" r="28" fill="url(#logoGrad1)" opacity="0.15"/>
+                            <circle cx="30" cy="30" r="28" fill="url(#logoGrad1)" opacity="0.1"/>
                             <circle cx="30" cy="30" r="28" stroke="url(#logoGrad1)" stroke-width="2" fill="none"/>
-                            <!-- Folder/Portfolio shape -->
-                            <path d="M16 20C16 18.8954 16.8954 18 18 18H26L29 22H42C43.1046 22 44 22.8954 44 24V40C44 41.1046 43.1046 42 42 42H18C16.8954 42 16 41.1046 16 40V20Z" fill="url(#logoGrad1)" filter="url(#glow)"/>
-                            <!-- Star/Achievement -->
-                            <path d="M30 26L31.5 31H36.5L32.5 34L34 39L30 36L26 39L27.5 34L23.5 31H28.5L30 26Z" fill="url(#logoGrad2)"/>
-                            <!-- Checkmark lines -->
-                            <path d="M20 32L23 35L28 29" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+                            <!-- Ascending bars (steps going up) -->
+                            <rect x="12" y="36" width="10" height="14" rx="2" fill="url(#logoGrad1)" filter="url(#glow)"/>
+                            <rect x="25" y="26" width="10" height="24" rx="2" fill="url(#logoGrad2)" filter="url(#glow)"/>
+                            <rect x="38" y="14" width="10" height="36" rx="2" fill="url(#logoGrad3)" filter="url(#glow)"/>
+                            <!-- Upward arrow accent -->
+                            <path d="M48 8L52 14L48 12L44 14L48 8Z" fill="#22d3ee" opacity="0.8"/>
                         </svg>
                     </div>
                     <h1 class="logo">Folio<span>Track</span></h1>
@@ -146,20 +149,24 @@
                 <div class="logo-icon-wrapper small">
                     <svg class="logo-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="navLogoGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <linearGradient id="navLogoGrad1" x1="0%" y1="100%" x2="100%" y2="0%">
                                 <stop offset="0%" style="stop-color:#3b82f6"/>
-                                <stop offset="50%" style="stop-color:#0ea5e9"/>
                                 <stop offset="100%" style="stop-color:#06b6d4"/>
                             </linearGradient>
-                            <linearGradient id="navLogoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#14b8a6"/>
+                            <linearGradient id="navLogoGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#0ea5e9"/>
                                 <stop offset="100%" style="stop-color:#22d3ee"/>
                             </linearGradient>
+                            <linearGradient id="navLogoGrad3" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#06b6d4"/>
+                                <stop offset="100%" style="stop-color:#67e8f9"/>
+                            </linearGradient>
                         </defs>
-                        <circle cx="30" cy="30" r="28" fill="url(#navLogoGrad1)" opacity="0.15"/>
+                        <circle cx="30" cy="30" r="28" fill="url(#navLogoGrad1)" opacity="0.1"/>
                         <circle cx="30" cy="30" r="28" stroke="url(#navLogoGrad1)" stroke-width="2" fill="none"/>
-                        <path d="M16 20C16 18.8954 16.8954 18 18 18H26L29 22H42C43.1046 22 44 22.8954 44 24V40C44 41.1046 43.1046 42 42 42H18C16.8954 42 16 41.1046 16 40V20Z" fill="url(#navLogoGrad1)"/>
-                        <path d="M30 26L31.5 31H36.5L32.5 34L34 39L30 36L26 39L27.5 34L23.5 31H28.5L30 26Z" fill="url(#navLogoGrad2)"/>
+                        <rect x="12" y="36" width="10" height="14" rx="2" fill="url(#navLogoGrad1)"/>
+                        <rect x="25" y="26" width="10" height="24" rx="2" fill="url(#navLogoGrad2)"/>
+                        <rect x="38" y="14" width="10" height="36" rx="2" fill="url(#navLogoGrad3)"/>
                     </svg>
                 </div>
                 <h1 class="logo">Folio<span>Track</span></h1>
@@ -223,6 +230,133 @@
                 <div class="stat-card">
                     <span class="stat-value" id="activity-types">0</span>
                     <span class="stat-label">Categories</span>
+                </div>
+            </div>
+
+            <!-- Statistics Dashboard & Progress Tracker -->
+            <div class="dashboard-panels">
+                <!-- Progress Tracker -->
+                <div class="dashboard-panel progress-panel">
+                    <div class="panel-header">
+                        <h3>Portfolio Progress</h3>
+                        <span class="progress-percentage" id="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress-ring-container">
+                        <svg class="progress-ring" viewBox="0 0 120 120">
+                            <defs>
+                                <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#3b82f6"/>
+                                    <stop offset="100%" style="stop-color:#06b6d4"/>
+                                </linearGradient>
+                            </defs>
+                            <circle class="progress-ring-bg" cx="60" cy="60" r="52" />
+                            <circle class="progress-ring-fill" id="progress-ring-fill" cx="60" cy="60" r="52" stroke="url(#progressGradient)" />
+                        </svg>
+                        <div class="progress-ring-text">
+                            <span class="progress-value" id="progress-value">0</span>
+                            <span class="progress-label">Complete</span>
+                        </div>
+                    </div>
+                    <div class="progress-checklist" id="progress-checklist">
+                        <div class="checklist-item" data-check="profile">
+                            <div class="check-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span>Complete your profile</span>
+                        </div>
+                        <div class="checklist-item" data-check="first-activity">
+                            <div class="check-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span>Add your first activity</span>
+                        </div>
+                        <div class="checklist-item" data-check="three-activities">
+                            <div class="check-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span>Add 3 activities</span>
+                        </div>
+                        <div class="checklist-item" data-check="skills">
+                            <div class="check-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span>Add skills to activities</span>
+                        </div>
+                        <div class="checklist-item" data-check="hours">
+                            <div class="check-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"/>
+                                </svg>
+                            </div>
+                            <span>Log 50+ hours</span>
+                        </div>
+                    </div>
+                    <!-- Milestone Badges -->
+                    <div class="milestone-badges" id="milestone-badges">
+                        <div class="badge-item" data-badge="first" title="First Activity">
+                            <div class="badge-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                                </svg>
+                            </div>
+                            <span>First Activity</span>
+                        </div>
+                        <div class="badge-item" data-badge="dedicated" title="10 Activities">
+                            <div class="badge-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/>
+                                </svg>
+                            </div>
+                            <span>Dedicated</span>
+                        </div>
+                        <div class="badge-item" data-badge="century" title="100 Hours">
+                            <div class="badge-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+                                </svg>
+                            </div>
+                            <span>Century</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Dashboard -->
+                <div class="dashboard-panel stats-panel">
+                    <div class="panel-header">
+                        <h3>Activity Breakdown</h3>
+                    </div>
+                    <!-- Hours by Category Chart -->
+                    <div class="chart-container">
+                        <div class="donut-chart" id="hours-chart">
+                            <svg viewBox="0 0 200 200">
+                                <circle class="donut-bg" cx="100" cy="100" r="80"/>
+                                <g id="donut-segments"></g>
+                            </svg>
+                            <div class="donut-center">
+                                <span class="donut-value" id="chart-total-hours">0</span>
+                                <span class="donut-label">Hours</span>
+                            </div>
+                        </div>
+                        <div class="chart-legend" id="chart-legend">
+                            <!-- Legend items generated by JS -->
+                        </div>
+                    </div>
+                    <!-- Skills Cloud -->
+                    <div class="skills-section">
+                        <h4>Top Skills</h4>
+                        <div class="skills-cloud" id="skills-cloud">
+                            <!-- Skills generated by JS -->
+                            <span class="skill-cloud-item empty">Add skills to your activities</span>
+                        </div>
+                    </div>
                 </div>
             </div>
 
