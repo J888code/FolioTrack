@@ -23,17 +23,35 @@
         <div class="auth-container">
             <div class="auth-header">
                 <div class="logo-container">
-                    <div class="logo-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="url(#logoGradient)" stroke-width="2">
+                    <div class="logo-icon-wrapper">
+                        <svg class="logo-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <defs>
-                                <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <linearGradient id="logoGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" style="stop-color:#6366f1"/>
+                                    <stop offset="50%" style="stop-color:#8b5cf6"/>
                                     <stop offset="100%" style="stop-color:#a855f7"/>
                                 </linearGradient>
+                                <linearGradient id="logoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#ec4899"/>
+                                    <stop offset="100%" style="stop-color:#f472b6"/>
+                                </linearGradient>
+                                <filter id="glow">
+                                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur"/>
+                                        <feMergeNode in="SourceGraphic"/>
+                                    </feMerge>
+                                </filter>
                             </defs>
-                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                            <path d="M8 7h8M8 11h8M8 15h5"/>
+                            <!-- Background circle -->
+                            <circle cx="30" cy="30" r="28" fill="url(#logoGrad1)" opacity="0.15"/>
+                            <circle cx="30" cy="30" r="28" stroke="url(#logoGrad1)" stroke-width="2" fill="none"/>
+                            <!-- Folder/Portfolio shape -->
+                            <path d="M16 20C16 18.8954 16.8954 18 18 18H26L29 22H42C43.1046 22 44 22.8954 44 24V40C44 41.1046 43.1046 42 42 42H18C16.8954 42 16 41.1046 16 40V20Z" fill="url(#logoGrad1)" filter="url(#glow)"/>
+                            <!-- Star/Achievement -->
+                            <path d="M30 26L31.5 31H36.5L32.5 34L34 39L30 36L26 39L27.5 34L23.5 31H28.5L30 26Z" fill="url(#logoGrad2)"/>
+                            <!-- Checkmark lines -->
+                            <path d="M20 32L23 35L28 29" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
                         </svg>
                     </div>
                     <h1 class="logo">Folio<span>Track</span></h1>
@@ -125,17 +143,23 @@
         <!-- Navigation -->
         <nav class="navbar">
             <div class="nav-brand">
-                <div class="logo-icon small">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="url(#logoGradient2)" stroke-width="2">
+                <div class="logo-icon-wrapper small">
+                    <svg class="logo-svg" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <defs>
-                            <linearGradient id="logoGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <linearGradient id="navLogoGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" style="stop-color:#6366f1"/>
+                                <stop offset="50%" style="stop-color:#8b5cf6"/>
                                 <stop offset="100%" style="stop-color:#a855f7"/>
                             </linearGradient>
+                            <linearGradient id="navLogoGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ec4899"/>
+                                <stop offset="100%" style="stop-color:#f472b6"/>
+                            </linearGradient>
                         </defs>
-                        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-                        <path d="M8 7h8M8 11h8M8 15h5"/>
+                        <circle cx="30" cy="30" r="28" fill="url(#navLogoGrad1)" opacity="0.15"/>
+                        <circle cx="30" cy="30" r="28" stroke="url(#navLogoGrad1)" stroke-width="2" fill="none"/>
+                        <path d="M16 20C16 18.8954 16.8954 18 18 18H26L29 22H42C43.1046 22 44 22.8954 44 24V40C44 41.1046 43.1046 42 42 42H18C16.8954 42 16 41.1046 16 40V20Z" fill="url(#navLogoGrad1)"/>
+                        <path d="M30 26L31.5 31H36.5L32.5 34L34 39L30 36L26 39L27.5 34L23.5 31H28.5L30 26Z" fill="url(#navLogoGrad2)"/>
                     </svg>
                 </div>
                 <h1 class="logo">Folio<span>Track</span></h1>
